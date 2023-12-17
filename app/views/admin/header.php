@@ -9,7 +9,7 @@
     <title>E-bank-V2</title>
 </head>
 
-<body>
+<body class="h-screen">
     <!-- <header>
         <div class="navbar bg-base-100 mb-9">
             <div class="navbar-start">
