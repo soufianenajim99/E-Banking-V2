@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <header>
+    <!-- <header>
         <div class="navbar bg-base-100 mb-9">
             <div class="navbar-start">
                 <div class="dropdown">
@@ -41,4 +41,4 @@
                 <a class="btn" href="app/views/login.php">LOGIN</a>
             </div>
         </div>
-    </header>
+    </header> -->
