@@ -5,9 +5,9 @@ class Bank{
     private $name;
     private $logo;
 
-    public function __construct($name,$logo){
+    public function __construct($bankId,$name,$logo){
 
-        $this->bankId = uniqid(mt_rand(), true);
+        $this->bankId = $bankId;
         $this->name = $name;
         $this->logo = $logo;
     }

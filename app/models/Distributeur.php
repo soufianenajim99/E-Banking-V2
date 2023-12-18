@@ -7,9 +7,9 @@ class Distributeur{
     private $adress;
     private $bankId;
 
-    public function __construct($longitude,$latitude,$bankId,$adress){
+    public function __construct($atmId,$longitude,$latitude,$bankId,$adress){
 
-        $this->atmId = uniqid(mt_rand(), true);
+        $this->atmId = $atmId;
         $this->longitude = $longitude;
         $this->latitude = $latitude;
         $this->adress = $adress;

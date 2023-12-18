@@ -13,7 +13,7 @@ class Adress{
 
 
     public function __construct($adressId, $ville, $quartier, $rue, $codePostal, $email, $phone,$timestamp){
-            $this->adressId = uniqid(mt_rand(), true);
+            $this->adressId = $adressId;
             $this->ville = $$ville;
             $this->quartier = $quartier;
             $this->rue = $rue;

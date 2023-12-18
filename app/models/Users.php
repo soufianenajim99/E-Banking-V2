@@ -10,8 +10,8 @@
         private $agencyId;
         private $timestamp;
 
-        public function __construct($username, $password, $nationality, $gendre,Adress $adress, $agencyId, $timestamp){
-            $this->id = uniqid(mt_rand(), true);
+        public function __construct($id,$username, $password, $nationality, $gendre,Adress $adress, $agencyId, $timestamp){
+            $this->id = $id;
             $this->username = $username;
             $this->password = $password;
             $this->nationality = $nationality;

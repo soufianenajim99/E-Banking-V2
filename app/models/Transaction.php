@@ -6,9 +6,9 @@ class Transaction{
     private $amount;
     private $accountId;
 
-    public function __construct($type,$amount,$accountId){
+    public function __construct($transactionId,$type,$amount,$accountId){
         
-       $this->transactionId = uniqid(mt_rand(), true);
+       $this->transactionId = $transactionId;
        $this->type = $type;
        $this->amount = $amount;
        $this->accountId = $accountId;

@@ -7,8 +7,8 @@ class Account{
     private $userId;
 
 
-    public function __construct( $balance, $RIB, $userId){
-     $this->accountId=uniqid(mt_rand(), true);
+    public function __construct($accountId, $balance, $RIB, $userId){
+     $this->accountId=$accountId;
      $this->balance= $balance;
      $this->RIB= $RIB;
      $this->userId=$userId;

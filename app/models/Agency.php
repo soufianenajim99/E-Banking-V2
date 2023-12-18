@@ -7,9 +7,9 @@ class Agency{
     private $bankId;
     private Adress $adress;
 
-    public function __construct($longitude,$latitude,$bankId,Adress $adress){
+    public function __construct($agencyid,$longitude,$latitude,$bankId,Adress $adress){
 
-        $this->agencyid = uniqid(mt_rand(), true);
+        $this->agencyid = $agencyid;
         $this->longitude = $longitude;
         $this->latitude = $latitude;
         $this->bankId = $bankId;
