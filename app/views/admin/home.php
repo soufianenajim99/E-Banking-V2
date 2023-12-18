@@ -1,6 +1,8 @@
 <?php
 require_once '../../bootstrap.php';
 include("header.php");
+
+$init = new Core;
 ?>
 
 <!-- navbar -->
