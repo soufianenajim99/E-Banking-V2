@@ -1,18 +1,17 @@
 <?php
 
-class Account{
-    private $accountId;
-    private $balance;
-    private $RIB;
-    private $userId;
+class Bank{
+    private $bankId;
+    private $name;
+    private $logo;
 
+    public function __construct($name,$logo){
 
-    public function __construct( $balance, $RIB, $userId){
-     $this->accountId=uniqid(mt_rand(), true);
-     $this->balance= $balance;
-     $this->RIB= $RIB;
-     $this->userId=$userId;
+        $this->bankId = uniqid(mt_rand(), true);
+        $this->name = $name;
+        $this->logo = $logo;
     }
+
     public function __get($property) {
         if (property_exists($this, $property)) {
           return $this->$property;
