@@ -1,7 +1,8 @@
 <?php
 
 interface ImUserService {
-    public function addUser(user $user);
+    public function addUser(User $user);
+    public function updateUser(User $user);
     public function displayUser();
     public function deleteUser($userid);
 
