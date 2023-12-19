@@ -26,4 +26,10 @@ class DataProvider {
         }
     }
 }
+
+
+define('APPROOT' , dirname(dirname(__FILE__)));
+define('SITENAME' , 'E-Banking');
+define('URLROOT' , 'http://localhost/E-Banking-V2');
+
     ?>

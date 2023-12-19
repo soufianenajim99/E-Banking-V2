@@ -3,7 +3,7 @@
     require_once "IBankService.php";
     require_once "../config/DataProvider.php";
 
-    class UserService extends DataProvbankIder implements ImBankService {
+    class BankService extends DataProvbankIder implements ImBankService {
 
         public function create(Bank $bank){
 

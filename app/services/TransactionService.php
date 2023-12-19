@@ -14,12 +14,11 @@ class TransactionService extends DataProvider implements ImTransactionService {
        $accountId = $transaction->accountId;
 
        
-       $sql= 'INSERT INTO transactions (transactionId ,type, amount, accountId) VALUES (:accountId, :type, :amount, :accountId)';
+       $sql= 'INSERT INTO transactions (transactionId ,type, amount, accountId) VALUES (:transactionId, :type, :amount, :accountId)';
        $stmt = $db->prepare($sql);
        $stmt->execute([
         ":type" => $type,
         ":amount" => $amount,
-        ":accountId"=> $accountId,
         ":transactionId"=> $transactionId,
 
        ]);

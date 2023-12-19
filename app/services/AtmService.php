@@ -1,73 +1,69 @@
 <?php
 
-require_once "../config/DataProvbankIder.php";
+require_once "../config/DataProvider.php";
 class ServiceAtm extends DataProvider implements ImAtmService
 {
-    public function add(Atm $atm)
+    public function add(Distributeur $atm)
     {
         $db = $this->connect();
-        // Implement the method here
+     
         $atmId = $atm->atmId;
         $bankId = $atm->bankId;
         $latitude = $atm->latitude;
-        $adress = $atm->address;
+        $adress = $atm->adress;
         $longitude = $atm->longitude;
 
-        try{
-            $this->db->query("INSERT INTO atm (atmId, adress, longitude, latitude, bankId) VALUES (:id, :adress, :longitude, :latitude, :bankId)");
-            $this->db->bind(":id", $atmId);
-            $this->db->bind(":adress", $adress);
-            $this->db->bind(":longitude", $longitude);
-            $this->db->bind(":latitude", $latitude);
-            $this->db->bind(":bankId", $bankId);
-            $this->db->execute();
-        } catch(Exception $e){
-            die("Error" . $e->getMessage());
-        }
+        $sql = "INSERT INTO atm (atmId, adress, longitude, latitude, bankId) VALUES (:id, :adress, :longitude, :latitude, :bankId)";
+
+        $stmt = $db->prepare($sql);
+     
+        $stmt->bind(":id", $atmId);
+        $stmt->bind(":adress", $adress);
+        $stmt->bind(":longitude", $longitude);
+        $stmt->bind(":latitude", $latitude);
+        $stmt->bind(":bankId", $bankId);
+        $stmt->execute();
+     
+
     }
 
-    public function update(Atm $atm)
+    public function update(Distributeur $atm)
     {
-        // Implement the method here
-        try {
-            $this->db->query("UPDATE atm SET adress = :adress, longitude = :longitude, latitude = :latitude WHERE atmId = :id");
-            // $stmt = $this->connect()->prepare($sql);
-            $this->db->bind(":adress", $atm->adress);
-            $this->db->bind(":longitude", $atm->longitude);
-            $this->db->bind(":latitude", $atm->latitude);
-            $this->db->bind(":id", $atm->id);
-            $this->db->execute();
-        } catch (PDOException $e){
-                die("Error: " . $e->getMessage());
-            
-        }
+        
+            $db = $this->connect();
+        
+            $sql = "UPDATE atm SET adress = :adress, longitude = :longitude, latitude = :latitude WHERE atmId = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->bind(":adress", $atm->adress);
+            $stmt->bind(":longitude", $atm->longitude);
+            $stmt->bind(":latitude", $atm->latitude);
+            $stmt->bind(":id", $atm->id);
+            $stmt->execute();
+       
     }
 
     public function display()
     {
-        // Implement the method here
-        try {
-            $this->db->query("SELECT * FROM atm");
-            // $query = $this->connect()->query($sql);
-            // $data = $query->fetchAll(PDO::FETCH_ASSOC);
-            $data = $this->db->resultSet();
+        $db = $this->connect();
+
+    
+            $sql = "SELECT * FROM atm";
+           $stmt = $db->query($sql);
+            $data =  $stmt->fetchAll(PDO::FETCH_OBJ);
             return $data;
-        } catch (PDOException $e){
-            die("Error: " . $e->getMessage());
-        }
+       
+      
     }
 
     public function delete($atmId)
     {
-        // Implement the method here
-        try {
-            $this->db->query("DELETE FROM atm WHERE atmId = :id");
-            // $stmt = $this->connect()->prepare($sql);
-            $this->db->bind(":id", $atmId);
-            $this->db->execute();
-        } catch (PDOException $e){
-            die("Error: " . $e->getMessage());
-        }
+        $db = $this->connect();
+
+        $sql = "DELETE FROM atm WHERE atmId = :id";
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(":id", $atmId);
+        $stmt->execute();
+       
     }
 
 }
