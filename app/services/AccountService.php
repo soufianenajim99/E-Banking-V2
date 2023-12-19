@@ -1,5 +1,8 @@
 <?php
 
+require_once "../config/DataProvider.php";
+
+
 class AccountService extends DataProvider implements ImAccountService {
 
     public function addAccount(Account $account) {
