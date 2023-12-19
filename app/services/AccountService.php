@@ -16,9 +16,10 @@ class AccountService extends DataProvider implements ImAccountService {
     VALUES (:accountId ,:balance , :rib , :userID)
     ";
     $stmt = $db->prepare($sql);
+    $stmt->bindParam(':accountId' ,$accountId,PDO::PARAM_STR);
     $stmt->bindParam(':balance' ,$balance,PDO::PARAM_STR);
-    $stmt->bindParam(':rib' ,$rib,PDO::PARAM_STR);
-    $stmt->bindParam(':userID' ,$userID,PDO::PARAM_INT);
+    $stmt->bindParam(':rib' ,$RIB,PDO::PARAM_STR);
+    $stmt->bindParam(':userID' ,$userId,PDO::PARAM_STR);
 
    try{
      $stmt->execute();
@@ -62,7 +63,7 @@ class AccountService extends DataProvider implements ImAccountService {
         $RIB = $account->RIB;
         $userId = $account->userId;
 
-        $sql = "UPDATE account SET balance = :balance , RIB = :rib WHERE accountId = $accountID";
+        $sql = "UPDATE account SET balance = :balance , RIB = :rib WHERE accountId = :accountID";
 
         $stmt = $db_connection->prepare($sql);
 
@@ -70,6 +71,7 @@ class AccountService extends DataProvider implements ImAccountService {
         $stmt->execute([
             ":balance"=> $balance,
             ":rib"=> $RIB,
+            ":accountId"=> $accountId,
 
         ]);
 
