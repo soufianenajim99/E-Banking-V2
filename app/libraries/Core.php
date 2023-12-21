@@ -9,6 +9,7 @@
     
     public function __construct()
     {
+        echo "core";
         $url = $this->getUrl();
         if (isset($url[0])) {
             if (file_exists('../app/controllers/' . $url[0] . '.php')) {

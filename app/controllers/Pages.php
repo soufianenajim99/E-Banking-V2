@@ -1,7 +1,7 @@
 <?php
 
-    require_once APPROOT . '/helpers/regex.php';
-    require_once APPROOT . '/security/LoginService.php';
+    // require_once APPROOT . '/helpers/regex.php';
+    // require_once APPROOT . '/security/LoginService.php';
 
 
     class Pages extends Controller{

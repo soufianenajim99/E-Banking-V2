@@ -12,7 +12,7 @@ class Adress{
     private $timestamp;
 
 
-    public function __construct($adressId, $ville, $quartier, $rue, $codePostal, $email, $phone,$timestamp){
+    public function __construct($adressId, $ville, $quartier, $rue, $codePostal, $email, $phone){
             $this->adressId = $adressId;
             $this->ville = $$ville;
             $this->quartier = $quartier;
@@ -20,7 +20,7 @@ class Adress{
             $this->codePostal = $codePostal;
             $this->email = $email;
             $this->phone = $phone;
-            $this->timestamp = $timestamp;
+            // $this->timestamp = $timestamp;
     }
 
 

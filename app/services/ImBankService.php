@@ -1,10 +1,11 @@
 <?php
 
     interface IBankService {
-        function create(Bank $bank);
-        function update(Bank $bank);
-        function delete($id);
-        function read();
+     function displayBanks();
+     function getBank($bankID);
+     function addBank(Bank $bank);
+     function updateBank(Bank $bank);
+     function deleteBank($bankId);
     }
 
 ?>

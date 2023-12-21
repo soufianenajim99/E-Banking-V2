@@ -5,7 +5,7 @@
 
     class BankService extends DataProvbankIder implements ImBankService {
 
-        public function create(Bank $bank){
+        public function addBank(Bank $bank){
 
             $db = $this->connect();
 
@@ -28,7 +28,7 @@
 
         }
 
-        public function update(Bank $bank){
+        public function updateBank(Bank $bank){
 
             $db = $this->connect();
 
@@ -52,7 +52,23 @@
 
         }
 
-        public function delete($bankId){
+        public function getBank($bankID)
+        {
+            $db = $this->connect();
+            
+            $sql = "SELECT * FROM bank WHERE bankID = :bankID";
+            $this->db->query($sql);
+            $this->db->bind(":bankID" , $bankID);
+            try {
+                $bank = $this->db->oneObject();
+                return $bank;
+            } catch (PDOException $e) {
+               return ("Faild to Get Banks" . $e->getMessage());
+            }
+        }
+
+
+        public function deleteBank($bankId){
 
             $db = $this->connect();
 
@@ -66,7 +82,7 @@
             }
         }
 
-        public function read(){
+        public function displayBanks(){
 
             $db = $this->connect();
 

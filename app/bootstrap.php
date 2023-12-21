@@ -3,6 +3,7 @@ session_start();
 
 require_once 'config/config.php';
 
+echo "boot";
 
 function Autoloader($class) {
     $paths = [

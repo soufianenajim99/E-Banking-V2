@@ -7,18 +7,18 @@ class Admin extends Controller{
 
     public function __construct()
     {
-        $this->bankService = new Bservice();
-        $this->agencyService = new AgencyService();
-        $this->userService = new Uservice();
-        // $this->userModel = $this->model('Adress');
+        $this->bankService = new BankService();
+        $this->agencyService = new ServiceAgency();
+        $this->userService = new UserService();
+        $this->userModel = $this->model('Adress');
     }
     public function home() {
         
         // Check If is Admin Or Not 
-        if (isset($_SESSION['rolename'])) {
-            if ($_SESSION['rolename'] != 'admin') {
-                header('Location:' . URLROOT . '/client/home');
-            }
+         if (isset($_SESSION['rolename'])) {
+             if ($_SESSION['rolename'] != 'admin') {
+                header('Location:' . URLROOT . '/admin/home');
+             }
         }else {
             header('Location:' . URLROOT . '/pages/index');
         }
@@ -40,10 +40,10 @@ class Admin extends Controller{
                 header('Location:' . URLROOT . '/client/home');
             }
         }else {
-            header('Location:' . URLROOT . '/pages/index');
+            header('Location:' . URLROOT . '/pages/bank');
         }
         // End Check
-        $banks = $this->bankService->getAllBanks();
+        $banks = $this->bankService->displayBanks();
 
         // Data Transfer To view;
         $data = [
@@ -63,7 +63,7 @@ class Admin extends Controller{
                 header('Location:' . URLROOT . '/client/home');
             }
         }else {
-            header('Location:' . URLROOT . '/pages/index');
+            header('Location:' . URLROOT . '/pages/addbank');
         }
         // End Check  
         // Check Validation
@@ -91,7 +91,7 @@ class Admin extends Controller{
 
             }
             if (empty($data['bankNameErr']) && empty($data['imgBankErr'])) {
-                $imgStore = $_SERVER["DOCUMENT_ROOT"]."/bank-mvc/public/img/uploads/";
+                $imgStore = $_SERVER["DOCUMENT_ROOT"]."/E-BANKING-V2/public/img/uploads/";
 
                 // Field Is Correct Add new Bank Here 
                 
@@ -103,10 +103,10 @@ class Admin extends Controller{
 
                 if (in_array($fileType , $correctExt)) {
                     if (move_uploaded_file($_FILES['logo']['tmp_name'], $placement)) {
-                        $newBank = new Bank();
-                        $newBank->setBankID(uniqid());
-                        $newBank->setBankName($data['bankname']);
-                        $newBank->setBankLogo($fileName);
+                        $newBank = new Bank(uniqid(),$data['bankname'],logo($fileName));
+                        // $newBank->bankID = (uniqid());
+                        // $newBank->name = ($data['bankname']);
+                        // $newBank->logo = logo($fileName);
                         try {
                             $this->bankService->addBank($newBank);
                             header('Location:' . URLROOT . '/admin/bank');
@@ -183,7 +183,7 @@ class Admin extends Controller{
                 'bank' => $this->bankService->getBank($bankID),
                 'page' => 'bank'
             ];
-            $imgStore = $_SERVER["DOCUMENT_ROOT"]."/bank-mvc/public/img/uploads/";
+            $imgStore = $_SERVER["DOCUMENT_ROOT"]."/E-BANKING-V2/public/img/uploads/";
 
             // Field Is Correct Add new Bank Here 
             
@@ -196,10 +196,10 @@ class Admin extends Controller{
 
             if (in_array($fileType , $correctExt)) {
                 if (move_uploaded_file($data['banklogo']['tmp_name'], $placement)) {
-                    $updateBank = new Bank();
-                    $updateBank->setBankID($bankID);
-                    $updateBank->setBankName($data['bankname']);
-                    $updateBank->setBankLogo($fileName);
+                    $updateBank = new Bank($bankID,$data['bankname'],$fileName);
+                    // $updateBank->setBankID($bankID);
+                    // $updateBank->setBankName($data['bankname']);
+                    // $updateBank->setBankLogo($fileName);
                     
                     try {
                         $this->bankService->updateBank($updateBank);
@@ -252,7 +252,7 @@ class Admin extends Controller{
         }else {
             header('Location:' . URLROOT . '/pages/index');
         }
-        $agency = $this->agencyService->getAllAgency();
+        $agency = $this->agencyService->display();
 
         $data = [
             'agencies' => $agency,
@@ -266,14 +266,13 @@ class Admin extends Controller{
     public function addAgency() {
         ob_start();
         $data = [
-            'banks' => $this->bankService->getAllBanks(),
+            'banks' => $this->bankService->displayBanks(),
             'page' => 'agency'
 
         ];
         $this->view('admin/addAgency' , $data);
 
         if (isset($_POST['agency'])) {
-            $newAgency = new Agency();
 
             $data = [
                 'longitude' => $_POST['longitude'],
@@ -287,24 +286,26 @@ class Admin extends Controller{
                 'code' => $_POST['code'],
                 'page' => 'agency'
             ];
-            $newAdress = new Adress();
-            ($newAdress->setAdressID(uniqid()));
-            ($newAdress->setVille($data['ville']));
-            ($newAdress->setQuartier($data['quartier']));
-            ($newAdress->setrue($data['rue']));
-            ($newAdress->setEmail($data['email']));
-            ($newAdress->setPhone($data['phone']));
-            ($newAdress->setcodePostal($data['code']));
+            $newAdress = new Adress(uniqid(),$data['ville'],$data['quartier'],$data['rue'],$data['email'],$data['phone'],$data['code']);
+            // ($newAdress->setAdressID(uniqid()));
+            // ($newAdress->setVille($data['ville']));
+            // ($newAdress->setQuartier($data['quartier']));
+            // ($newAdress->setrue($data['rue']));
+            // ($newAdress->setEmail($data['email']));
+            // ($newAdress->setPhone($data['phone']));
+            // ($newAdress->setcodePostal($data['code']));
+            $newAgency = new Agency(uniqid(),$data['longitude'],$data['latitude'],$data['bankID'],$newAdress);
 
-            $newBank = new Bank();
-            $newBank->setBankID($data['bankID']);
-            $newAgency->setAdress($newAdress); 
-            $newAgency->setBank($newBank);
-            $newAgency->setAgencyID(uniqid());
-            $newAgency->setLongitude($data['longitude']);
-            $newAgency->setlatitude($data['latitude']);
 
-            $this->agencyService->addAgency($newAgency);
+            // $newBank = new Bank();
+            // $newBank->setBankID($data['bankID']);
+            // $newAgency->setAdress($newAdress); 
+            // $newAgency->setBank($newBank);
+            // $newAgency->setAgencyID(uniqid());
+            // $newAgency->setLongitude($data['longitude']);
+            // $newAgency->setlatitude($data['latitude']);
+
+            $this->agencyService->add($newAgency);
             
             header('Location:' . URLROOT . '/admin/agency');
 
@@ -342,7 +343,7 @@ class Admin extends Controller{
     // ============= Add USER ================-
     public function addUser() {
         ob_start();
-        $agencies = $this->agencyService->getAllAgency();
+        $agencies = $this->agencyService->display();
 
         $data = [
             'agencies' => $agencies,
